@@ -61,6 +61,38 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = '';
+
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const html = `
+    <div class="movements__row">
+      <div class="movements__type movements__type--${type}">${
+      i + 1
+    } ${type}</div>
+      <div class="movements__value">${mov}</div>
+    </div>`;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+displayMovements(account1.movements);
+
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+
+console.log(createUsernames(accounts));
+console.log(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -121,6 +153,7 @@ console.log(letters.join(' - '));
 // join - ele cria uma string com os elementos da array. Os argumentos que são passados para ele é o que vai ter entre os elementos da array quando forem transformados em string. Se não for colocado nada, ele retornará uma string única com todos os elementos juntos. Geralmente é passado como argumento um espaço vazio " " ou um hífen " - ", mas pode ser colcado qualquer coisa, exemplo: '*---*'.
 */
 
+//////////////////////////////////////////////////////////////////////
 /* NOVO MÉTODO AT
 
 const arr = [23, 11, 64];
@@ -137,6 +170,7 @@ console.log('Jonas'.at(0));
 
 */
 
+////////////////////////////////////////////////////////////
 /* FOR EACH
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -165,6 +199,7 @@ movements.forEach(function (mov, index) {
 
 */
 
+/////////////////////////////////////////////////////////////////
 /* forEach with maps and sets
 
 // Map
@@ -185,5 +220,134 @@ console.log(currenciesUnique);
 currenciesUnique.forEach(function (key, value, map) {
   console.log(`${key}: ${value}`);
 });
+
+*/
+
+////////////////////////////////////////////////////////////////
+/*
+// CODE CHALLENGE #1
+const checkDogs = function (juliaAgeDogs, kateAgeDogs) {
+  console.log(juliaAgeDogs);
+  const juliaPetsWithoutCats = juliaAgeDogs.slice(1, -2);
+  console.log(juliaPetsWithoutCats);
+  const juliaAndKate = juliaPetsWithoutCats.concat(kateAgeDogs);
+
+  juliaAndKate.forEach((dog, i) => {
+    const dogType = dog >= 3 ? `adulto` : `filhote`;
+
+    console.log(`O cahorro ${i + 1} tem ${dog} anos e é um ${dogType} `);
+  });
+  console.log(juliaAndKate);
+};
+
+const juliaDogs = [3, 5, 2, 12, 7];
+const kateDogs = [4, 1, 15, 8, 3];
+checkDogs(juliaDogs, kateDogs);
+
+const juliaDogs2 = [9, 16, 6, 8, 3];
+const kateDogs2 = [10, 5, 6, 1, 4];
+checkDogs(juliaDogs2, kateDogs2);
+*/
+
+/////////////////////////////////////////////////////////////////////
+/*
+// DATA TRANSFORMATIONS WITH MAP, FILTER AND REDUCE
+//// transformação de dados com map, filter e reduce
+
+METHODS:
+- MAP
+  - Outro método para fazer loop em arrays. É muito semelhante ao forEach com a diferença de que ele cria uma nova array com base na array original. Basicamente ele faz um loop em uma array, e em cada iteração aplica uma fanção de callback ao elemento atual da array.
+
+  MDN description: O map()método é um método iterativo . Ele chama uma callbackFnfunção fornecida uma vez para cada elemento em um array e constrói um novo array a partir dos resultados.
+
+  exemple: 
+
+  const array1 = [3, 1, 4, 3, 2];
+  const arrayMap = array1.map((num) => num * 2)
+
+  result:
+  array1 = [3, 1, 4, 3, 2];
+  arrayMap = [6, 2, 8, 6, 4];
+
+
+- FILTER
+  - Como o próprio nome já sugere é um método feito para filtrar os elementos do array original que satisfaçam uma determinada condição.
+
+  MDN description: O filter()método é um método iterativo . Ele chama uma callbackFnfunção fornecida uma vez para cada elemento em um array e constrói um novo array de todos os valores para os quais callbackFnretorna um valor verdadeiro . Os elementos do array que não passam no callbackFnteste não são incluídos no novo array.
+
+  exemple:
+
+  const array1 = [3, 1, 4, 3, 2];
+  const array1Filtered = array1.filter((num) => num > 2);
+
+  result
+  array 1 //[3, 1, 4, 3, 2];
+  array1Filtered // [3, 4, 3]; - os numeros 1 e 2 não passaram no teste
+
+  Ou seja, os elementos que passarem no teste e forem verdadeiros entrarão na nova matriz gerada pelo método filter.
+
+- REDUCE
+  - Usado para condensar todos os elementos do array original em um único valor. Neste caso não tem um novo array, ma agora temos um único valor reduzido, um vlaor único.
+
+  MDN description : O reduce()método é um método iterativo . Ele executa uma função de retorno de chamada "redutora" sobre todos os elementos no array, em ordem de índice ascendente, e os acumula em um único valor. Toda vez, o valor de retorno de callbackFné passado para callbackFnnovamente na próxima invocação como accumulator. O valor final de accumulator(que é o valor retornado de callbackFnna iteração final do array) se torna o valor de retorno de reduce().
+
+  exemple:
+
+
+
+*/
+
+///////////////////////////////////////////////////////////
+
+/*
+MAP NA PRÁTICA
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const eurToUsd = 1.1;
+
+// const convertedForUsd = movements.map(function(mov){
+//  return eur * eurToUsd;
+//}) ----------------------- callback extenso
+
+const convertedForUsd = movements.map(eur => eur * eurToUsd); // ------------- arrow function (mais limpo)
+
+console.log(eurToUsd);
+console.log(movements);
+console.log(convertedForUsd);
+
+// FOR OF
+const newArray = [];
+for (const mov of movements) {
+  newArray.push(mov * eurToUsd);
+}
+console.log(newArray);
+
+// FOR EACH
+const arrayForeach = [];
+movements.forEach(mov => {
+  arrayForeach.push(mov * eurToUsd);
+});
+console.log(arrayForeach);
+
+// O que destaque o metodo MAP de outros métodos como o FOR OF e o FOR EACH é que para resolver o problema nos  dois últimos casos é preciso criar uma array manualmente para obter o resultado resejado, já com o método MAP não é preciso criar uma nova variável contendo um array, pois o método MAP já cria uma automaticamente.
+
+
+
+*/
+
+/*
+Assim como o forEach, o método map também tem 3 parâmetros
+
+1- o elemento atual
+2- o indice
+3- o array todo
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const movDescriptions = movements.map(
+  (mov, i) =>
+    `Movement ${i + 1}: You ${mov > 0 ? `Deposited` : `Withdrawal`} ${mov}`
+);
+console.log(movDescriptions);
 
 */
