@@ -61,10 +61,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -72,13 +74,40 @@ const displayMovements = function (movements) {
       <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-      <div class="movements__value">${mov}</div>
+      <div class="movements__value">${mov}€</div>
     </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 displayMovements(account1.movements);
+
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance}€`;
+};
+
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  const output = acc.movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  const interest = acc.movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * acc.interestRate) / 100)
+    .filter((int, i, arr) => {
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+
+  labelSumIn.textContent = `${incomes}€`;
+  labelSumOut.textContent = `${Math.abs(output)}€`;
+  labelSumInterest.textContent = `${interest}€`;
+};
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
@@ -89,9 +118,112 @@ const createUsernames = function (accs) {
       .join('');
   });
 };
+createUsernames(accounts);
 
-console.log(createUsernames(accounts));
-console.log(accounts);
+const updateUI = function (acc) {
+  // Display movements
+  displayMovements(acc.movements);
+
+  // Display balance
+  calcDisplayBalance(acc);
+
+  // Display summary
+  calcDisplaySummary(acc);
+};
+
+// Event Hundler
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  // previne o comportamento padrão do botão enviar
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+
+    // Clear inputs
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    // Uptade the page
+    updateUI(currentAccount);
+  }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+
+  inputTransferAmount.value = inputTransferTo.value = '';
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    // fazendo a transferência
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    // Uptade the page
+    updateUI(currentAccount);
+  }
+});
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // adicionar saldo positivo ao saldo
+    currentAccount.movements.push(amount);
+    // atualizar a ui
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount?.username &&
+    Number(inputClosePin.value) === currentAccount?.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    console.log(index);
+
+    // Delete account
+    accounts.splice(index, 1);
+
+    //hide
+    containerApp.style.opacity = 0;
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
+});
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -351,3 +483,258 @@ const movDescriptions = movements.map(
 console.log(movDescriptions);
 
 */
+
+//////////////////////////////////////////////////
+
+/*FILTER NA PRÁTICA
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log(movements);
+
+// Usando o método filter para adicionar elementos verdadeiros dentro de um novo array dinamicamente
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
+});
+console.log(deposits);
+
+// Mesma função usando o for of para comparação
+const truthElements = [];
+for (const mov of movements) {
+  if (mov > 0) {
+    truthElements.push(mov);
+  }
+}
+console.log(truthElements);
+
+// Usando o filter para inserir dinamicamente as saídas do movement
+
+const withdrawal = movements.filter(mov => mov < 0);
+console.log(withdrawal);
+
+// O método filter assim como o método map também retorna uma array, mas só entram nesse novo array aqueles elementos que atenderem a condição especificada, ou seja, passarem no filtro.
+*/
+
+////////////////////////////////////////////////////////////
+
+/*REDUCE METHOD NA PRÁTICA*/
+/*
+ 1 - O primeiro parâmetro do metodo reduce é algo chamado de 'acumulador', diferente dos métodos map, filter e forEach, que o primeiro parâmetro deles é o elemento atual. Esse acumulador é como uma bola de neve que vai acumulando a cada iteração
+
+ 2 - funciona como valor inicial, esse é o segundo argumento do reduce
+
+ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log(movements);
+
+const balance = movements.reduce((acc, cur) => acc + cur, 0); //2 ;
+console.log(balance);
+
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2);
+
+// A vantagem que o reduce tem em sobre o for of é a mesma que os outro métodos tem, com o reduce não é necessário criar uma variável extra para resolver o problema, com o for of por sua vez é obrigatório para fazer acontecer
+
+// Valor maximo
+
+const max = movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, movements[0]);
+console.log(max);
+*/
+
+//////////////////////////////////////////////
+/*CODING CHALLANGE
+
+const calcAvaregeHuman = function (ages) {
+  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+  const adults = humanAges.filter(dog => dog >= 18);
+  const media = adults.reduce((acc, crr) => (acc += crr)) / adults.length;
+
+  return media;
+};
+
+const ageDogs1 = [5, 2, 4, 1, 15, 8, 3];
+const ageDogs2 = [16, 6, 10, 5, 6, 1, 4];
+
+const avg1 = calcAvaregeHuman(ageDogs1);
+const avg2 = calcAvaregeHuman(ageDogs2);
+
+console.log(avg1, avg2);
+*/
+
+/*
+USANDO OS TRÊS METODOS JUNTOS
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const eurToUsd = 1.1;
+const totalDepositsUSD = Math.trunc(
+  movements
+    .filter(mov => mov > 0)
+    .map(mov => mov * eurToUsd)
+    .reduce((acc, mov) => acc + mov, 0)
+);
+console.log(totalDepositsUSD);
+
+*/
+
+////////////////////////////////////
+/*
+CODING CHALLANGE 3
+
+Esse desafio coloca em prática a habilidade de encadear vários métodos de uma vez para gerarem um resultado.
+
+const calcAvaregeHuman = function (ages) {
+  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+  const adults = humanAges.filter(dog => dog >= 18);
+  const media = adults.reduce((acc, crr) => (acc += crr)) / adults.length;
+
+  return media;
+};
+
+const calcAvaregeHuman = ages =>
+  ages
+    .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+    .filter(age => age >= 18)
+    .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+
+const teste1 = [5, 2, 4, 1, 15, 8, 3];
+const teste2 = [16, 6, 10, 5, 6, 1, 4];
+
+const avg1 = calcAvaregeHuman(teste1);
+const avg2 = calcAvaregeHuman(teste2);
+
+console.log(avg1, avg2);
+
+*/
+
+///////////////////////////////////
+/*
+MÉTODO FIND - recuperar
+
+Como o próprio nome já diz, o método find serve para recuperar um elemento de um array com base em uma condição.
+
+Ao contrário do método filter, o find não retorna uma nova array, mas retornará apenas o primeiro elemento na array que satisfaça essa condição 
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const firstWithdrawl = movements.find(mov => mov < 0);
+
+console.log(movements);
+console.log(firstWithdrawl);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+
+// Mesmo efeito com FOR OF!
+for (const acc of accounts) {
+  const conta = acc.owner;
+  if (conta === 'Jessica Davis') {
+    console.log('Chegamos na Jessica Davis com for of!');
+    console.log(acc);
+  };
+};
+
+*/
+
+////////////////////////////////////////////////
+/*
+MÉTODO FINDINDEX
+
+FindIndex é bem parecido com o método find, mas como o próprio nome já diz ele retorna o index do elemento encontrado e não o elemento em si.
+*/
+
+/////////////////////////////////////////////////
+/*
+MÉTODO SOME E MÉTODO EVERY
+
+O método some retorna true se pelo menos 1 elemento da array atender uma condição específica.
+
+Já o método every retorna true apenas se todos os elementos de um array satisfazerem uma condição
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+console.log(movements);
+
+// Verifica a igualdade
+console.log(movements.includes(-130));
+
+// Verifica com base na condição
+const anyDeposits = movements.some(mov => mov > 1500);
+console.log(anyDeposits);
+
+// Every
+console.log(account4.movements.every(mov => mov > 0));
+
+// Callback separado
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+
+*/
+
+/////////////////////////////////////////////
+/*
+MÉTODO FLAT E FLATMAP
+
+flat - ele simplesmente desaninha todo o array deixando tudo flat (plano). Ele atinge apenas o primeiro nível de alinhamento, se tiver mais de um nível de aninhamento ele não deixa plano, apenas no primeiro nível. Para resolver esse problema podemos passar o nível de profundidade que o flat deve atingir, no caso, o número passado como argumento para o flat será o nível de porfundidade que ele vai operar;
+
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2));
+
+// Flat
+const somaMovements = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, crr) => acc + crr);
+console.log(somaMovements);
+
+// Flatmap
+const somaMovements2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, crr) => acc + crr);
+console.log(somaMovements2);
+
+*/
+
+////////////////////////////////////////////////
+/*
+MÉTODO SORT
+
+//strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+console.log(owners);
+
+//numbers
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+console.log(movements);
+
+// return < 0, A B (mantem a ordem)
+// return < 0, A B (muda a ordem)
+movements.sort((a, b) => {
+  if (a > b) return 1;
+  if (a < b) return -1;
+});
+console.log(movements);
+
+// outra forma de fazer
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+// decrescente
+movements.sort((a, b) => b - a);
+console.log(movements);
+
+
+*/
+
+const x = new Array(7);
+console.log(x);
