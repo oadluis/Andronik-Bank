@@ -1,4 +1,5 @@
 import Login from "../commom/Login";
+import imageLogo from "../../assets/logo.png";
 
 function Navbar() {
   return (
@@ -6,9 +7,7 @@ function Navbar() {
       <h1 className="text-2xl font-medium text-gray-500">
         Welcome to Andronik Bank
       </h1>
-
-      {/* add image latter */}
-
+      <img src={imageLogo} alt="logo" className="w-10 h-10" />
       <Login />
     </nav>
   );

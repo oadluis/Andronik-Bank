@@ -1,13 +1,21 @@
+import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
+
 function Login() {
   return (
-    <div className="flex items-center gap-2 bg-red-500">
-      <input type="text" placeholder="Username" className="p-2 bg-green-300" />
+    <div className="flex items-center gap-2 ">
+      <input
+        type="text"
+        placeholder="Username"
+        className="p-3 bg-gray-300 rounded-xl"
+      />
       <input
         type="password"
         placeholder="Password"
-        className="p-2 bg-blue-300"
+        className="p-3 bg-gray-300 rounded-xl"
       />
-      <button>Login</button>
+      <button>
+        <ArrowLongRightIcon className="size-8" />
+      </button>
     </div>
   );
 }
