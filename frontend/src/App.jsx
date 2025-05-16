@@ -8,7 +8,7 @@ function App() {
       <Navbar />
       <div className="flex flex-col justify-center items-center">
         <CurrentBalance />
-        <div className="flex justify-center items-center w-3/4 bg-purple-800">
+        <div className="flex justify-center items-center w-3/4">
           <div className="flex flex-col justify-center items-start w-2/4 pl-5 pr-5">
             <CurrentLogs />
           </div>

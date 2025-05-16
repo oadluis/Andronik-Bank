@@ -1,7 +1,16 @@
+import StratumCard from "../commom/StratumCard";
+
 function CurrentLogs() {
   return (
-    <div className="bg-red-800 w-full">
-      <h2 className="text-3xl font-medium text-gray-800">Current Logs</h2>
+    <div className="bg-white w-full h-[30rem] rounded-lg overflow-x-hidden overflow-y-auto">
+      <StratumCard />
+      <StratumCard />
+      <StratumCard />
+      <StratumCard />
+      <StratumCard />
+      <StratumCard />
+      <StratumCard />
+      <StratumCard />
     </div>
   );
 }
