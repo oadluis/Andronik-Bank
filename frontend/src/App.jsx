@@ -20,6 +20,7 @@ function App() {
     </div>
   );
   // Commit of day¹
+  // Commit of day²
 }
 
 export default App;
