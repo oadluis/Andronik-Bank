@@ -12,8 +12,9 @@ function App() {
           <div className="flex flex-col justify-center items-start w-2/4 pl-5 pr-5">
             <CurrentLogs />
           </div>
-          <div className="flex flex-col justify-center items-center w-2/4">
-            <p>Haverá coisas aqui :)</p>
+          <div className="flex flex-col justify-around items-start w-2/4">
+            <TransferMoney />
+            <TransferMoney />
             <TransferMoney />
           </div>
         </div>

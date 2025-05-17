@@ -1,6 +1,6 @@
 function TransferMoney() {
   return (
-    <div className="flex flex-col justify-center items-start w-full h-full bg-red-800 p-[3rem]">
+    <div className="flex flex-col justify-center items-start w-full bg-red-800 px-[3rem] py-[2.7rem] my-4">
       <span className="text-2xl font-bold">Transfer Money</span>
       <div className="flex flex-col justify-center items-start w-full h-full bg-blue-800">
         <div className="flex flex-row justify-start items-start w-full h-full">
