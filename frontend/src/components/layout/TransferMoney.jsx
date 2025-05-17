@@ -1,3 +1,5 @@
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+
 function TransferMoney() {
   return (
     <div className="flex flex-col justify-center items-start w-full bg-red-800 px-[3rem] py-[1.7rem] my-4 rounded-xl bg-gradient-to-br from-[#ffb003] to-[#ffcb03]">
@@ -7,19 +9,19 @@ function TransferMoney() {
           <div className="flex flex-col justify-center items-center">
             <input
               type="text"
-              className="bg-gray-400 opacity-50 rounded-lg p-1 mb-2"
+              className="bg-gray-500 opacity-25 rounded-lg p-1 mb-2"
             />
             <label>TransferTo</label>
           </div>
           <div className="flex flex-col justify-center items-center">
             <input
               type="text"
-              className="bg-gray-400 opacity-50 rounded-lg p-1 mb-2"
+              className="bg-gray-500 opacity-25 rounded-lg p-1 mb-2"
             />
             <label>Amount</label>
           </div>
-          <button className="bg-gray-400 opacity-50 rounded-lg p-1 mb-2">
-            Transfer
+          <button className="bg-white rounded-lg py-1 px-4 mb-2">
+            <ArrowRightIcon className="size-6" />
           </button>
         </form>
       </div>
