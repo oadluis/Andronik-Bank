@@ -11,23 +11,5 @@ export default {
       },
     },
   },
-  plugins: [
-    function ({ addUtilities }) {
-      const newUtilities = {
-        ".gradient-deposit": {
-          "background-image":
-            "linear-gradient(to top left, var(--tw-gradient-stops))",
-          "--tw-gradient-from": "var(--deposit-start)",
-          "--tw-gradient-to": "var(--deposit-end)",
-        },
-        ".gradient-withdrawal": {
-          "background-image":
-            "linear-gradient(to top left, var(--tw-gradient-stops))",
-          "--tw-gradient-from": "var(--withdrawal-start)",
-          "--tw-gradient-to": "var(--withdrawal-end)",
-        },
-      };
-      addUtilities(newUtilities);
-    },
-  ],
+  plugins: [],
 };
