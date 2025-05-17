@@ -7,7 +7,7 @@ function Navbar() {
       <h1 className="text-2xl font-medium text-gray-500">
         Welcome to Andronik Bank
       </h1>
-      <img src={imageLogo} alt="logo" className="w-10 h-10" />
+      <img src={imageLogo} alt="logo" className="size-12" />
       <Login />
     </nav>
   );

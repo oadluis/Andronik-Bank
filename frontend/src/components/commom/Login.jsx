@@ -1,4 +1,4 @@
-import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 function Login() {
   return (
@@ -6,15 +6,15 @@ function Login() {
       <input
         type="text"
         placeholder="Username"
-        className="p-3 bg-gray-300 rounded-xl"
+        className="w-2/4 p-2 arrow-right bg-gray-300 opacity-75 rounded-xl"
       />
       <input
         type="password"
         placeholder="Password"
-        className="p-3 bg-gray-300 rounded-xl"
+        className="w-2/4 p-2 bg-gray-300 opacity-75 rounded-xl"
       />
       <button>
-        <ArrowLongRightIcon className="size-8" />
+        <ArrowRightIcon className="size-6" />
       </button>
     </div>
   );
