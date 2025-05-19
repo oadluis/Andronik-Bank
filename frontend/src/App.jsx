@@ -2,6 +2,8 @@ import Navbar from "./components/layout/Navbar";
 import CurrentBalance from "./components/layout/CurrentBalance";
 import CurrentLogs from "./components/layout/Stratum";
 import TransferMoney from "./components/layout/TransferMoney";
+import RequestLoan from "./components/layout/RequestLoan";
+
 function App() {
   return (
     <div className="m-0 p-0 min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col">
@@ -14,14 +16,12 @@ function App() {
           </div>
           <div className="flex flex-col justify-around items-start w-2/4">
             <TransferMoney />
-            <TransferMoney />
-            <TransferMoney />
+            <RequestLoan />
           </div>
         </div>
       </div>
     </div>
   );
-  // Commit of day¹
 }
 
 export default App;
