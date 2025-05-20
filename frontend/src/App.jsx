@@ -3,6 +3,7 @@ import CurrentBalance from "./components/layout/CurrentBalance";
 import CurrentLogs from "./components/layout/Stratum";
 import TransferMoney from "./components/layout/TransferMoney";
 import RequestLoan from "./components/layout/RequestLoan";
+import CloseAccount from "./components/layout/CloseAccount";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <div className="flex flex-col justify-around items-start w-2/4">
             <TransferMoney />
             <RequestLoan />
+            <CloseAccount />
           </div>
         </div>
       </div>
