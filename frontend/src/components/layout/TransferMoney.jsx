@@ -11,7 +11,7 @@ function TransferMoney() {
               type="text"
               className="bg-gray-500 opacity-25 rounded-lg p-1 mb-2"
             />
-            <label>Confirm User</label>
+            <label>Transfer To</label>
           </div>
           <div className="flex flex-col justify-center items-center">
             <input

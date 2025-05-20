@@ -14,7 +14,7 @@ function RequestLoan() {
             <label>Amount</label>
           </div>
           <button className="bg-white rounded-lg py-1 px-4 mb-2">
-            <ArrowRightIcon />
+            <ArrowRightIcon className="size-6" />
           </button>
         </form>
       </div>
