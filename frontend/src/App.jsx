@@ -1,9 +1,9 @@
 import Navbar from "./components/layout/Navbar";
 import CurrentBalance from "./components/layout/CurrentBalance";
 import CurrentLogs from "./components/layout/Stratum";
-import TransferMoney from "./components/layout/TransferMoney";
-import RequestLoan from "./components/layout/RequestLoan";
-import CloseAccount from "./components/layout/CloseAccount";
+import TransferMoney from "./components/layout/operations/TransferMoney";
+import RequestLoan from "./components/layout/operations/RequestLoan";
+import CloseAccount from "./components/layout/operations/CloseAccount";
 import Footer from "./components/layout/Footer";
 
 function App() {
