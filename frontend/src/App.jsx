@@ -34,6 +34,8 @@ function App() {
       const userData = await response.json();
       setCurrentUser(userData);
 
+      console.log("Login bem sucedido! Dados do usuário:", userData);
+
     } catch (err) {
       console.error("Erro durante o login:", error.message);
       alert("Login falhou:" + error.message)
@@ -43,7 +45,7 @@ function App() {
 
   return (
     <div className="h-[100dvh] bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col">
-      <Navbar />
+      <Navbar onLoginSubmit={handleLogin} currentUser={currentUser}/>
 
       {currentUser ? (
         <div className="h-full flex flex-col justify-center items-center">
