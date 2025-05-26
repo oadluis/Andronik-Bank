@@ -1,5 +1,4 @@
 function CurrentBalance({currentUser}) {
-
   return (
     <div className=" p-5  w-3/4 flex justify-between">
       <div>
