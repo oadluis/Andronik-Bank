@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
-function Login({onLoginSubmit, currentUser}) {
+function Login({onLoginSubmit}) {
   const [username, setUsername] = useState('');
   const [pin, setPin] = useState('');
 
