@@ -6,8 +6,11 @@ function CurrentLogs({ currentUser }) {
 
   return (
     <div className="bg-white w-full h-[40rem] rounded-lg overflow-x-hidden overflow-y-auto px-3 py-3">
-      {movements.map((movementValue) => (
-        <StratumCard movementValue={movementValue} />
+      {movements.map((movementValue, movementIndex) => (
+        <StratumCard
+          movementValue={movementValue}
+          movementIndex={movementIndex}
+        />
       ))}
     </div>
   );

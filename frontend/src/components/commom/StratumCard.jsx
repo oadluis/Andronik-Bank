@@ -1,16 +1,16 @@
-function StratumCard({ movementValue }) {
+function StratumCard({ movementValue, movementIndex }) {
   return (
-    <div className="flex justify-between items-center w-full h-auto p-5">
+    <div className="flex justify-between items-center w-full h-auto px-[2rem] py-[1.7rem] border-b border-gray-100">
       <span
         className={`font-medium text-white ${
           movementValue > 0
             ? `bg-gradient-to-tl from-[#39b385] to-[#9be15d]`
-            : `bg-red-800`
-        }  px-4 py-2 rounded-full`}
+            : `bg-gradient-to-tl from-[#e52a5a] to-[#ff585f]`
+        }  px-5 py-1 rounded-full`}
       >
-        1 deposit
+        {`${movementIndex} - ${movementValue > 0 ? 'Deposit' : 'Withdrawal'}`}
       </span>
-      <span className="text-gray-500 font-medium">${movementValue}</span>
+      <span className="text-gray-500 font-medium font-3">${movementValue}</span>
     </div>
   );
 }
