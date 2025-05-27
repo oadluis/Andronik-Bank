@@ -1,27 +1,27 @@
-import {useState} from "react";
+import { useState } from 'react';
 
-import Navbar from "./components/layout/Navbar";
-import CurrentBalance from "./components/layout/CurrentBalance";
-import CurrentLogs from "./components/layout/Stratum";
-import TransferMoney from "./components/layout/operations/TransferMoney";
-import RequestLoan from "./components/layout/operations/RequestLoan";
-import CloseAccount from "./components/layout/operations/CloseAccount";
-import Footer from "./components/layout/Footer";
+import Navbar from './components/layout/Navbar';
+import CurrentBalance from './components/layout/CurrentBalance';
+import CurrentLogs from './components/layout/Stratum';
+import TransferMoney from './components/layout/operations/TransferMoney';
+import RequestLoan from './components/layout/operations/RequestLoan';
+import CloseAccount from './components/layout/operations/CloseAccount';
+import Footer from './components/layout/Footer';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null);
 
   const handleLogin = async (username, pin) => {
-    try{
+    try {
       const response = await fetch('http://localhost:3000/api/v1/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({username, pin})
-      })
+        body: JSON.stringify({ username, pin }),
+      });
 
-      if(!response.ok) {
+      if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Login falhou');
       }
@@ -29,37 +29,34 @@ function App() {
       const userData = await response.json();
       setCurrentUser(userData);
 
-      console.log("Login bem sucedido! Dados do usuário:", userData);
-
+      console.log('Login bem sucedido! Dados do usuário:', userData);
     } catch (err) {
-      console.error("Erro durante o login:", error.message);
-      alert("Login falhou:" + error.message)
+      console.error('Erro durante o login:', error.message);
+      alert('Login falhou:' + error.message);
     }
-  }
+  };
 
   return (
     <div className="h-[100dvh] bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col">
-      <Navbar onLoginSubmit={handleLogin} currentUser={currentUser}/>
+      <Navbar onLoginSubmit={handleLogin} currentUser={currentUser} />
 
       {currentUser ? (
         <div className="h-full flex flex-col justify-center items-center">
-        <CurrentBalance currentUser={currentUser} />
-        <div className="flex justify-center items-center w-3/4">
-          <div className="flex flex-col justify-center items-start w-2/4 px-5">
-            <CurrentLogs />
+          <CurrentBalance currentUser={currentUser} />
+          <div className="flex justify-center items-center w-3/4">
+            <div className="flex flex-col justify-center items-start w-2/4 px-5">
+              <CurrentLogs currentUser={currentUser} />
+            </div>
+            <div className="flex flex-col justify-around items-start w-2/4">
+              <TransferMoney />
+              <RequestLoan />
+              <CloseAccount />
+            </div>
           </div>
-          <div className="flex flex-col justify-around items-start w-2/4">
-            <TransferMoney />
-            <RequestLoan />
-            <CloseAccount />
-          </div>
-        </div>
-        <div>
-        </div>
+          <div></div>
           <Footer />
-      </div>
-      ): (null)}
-      
+        </div>
+      ) : null}
     </div>
   );
 }

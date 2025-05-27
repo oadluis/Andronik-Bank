@@ -117,13 +117,8 @@ const createUsernames = function (accs) {
 createUsernames(accounts);
 
 const updateUI = function (acc) {
-  // Display movements
   displayMovements(acc.movements);
-
-  // Display balance
   calcDisplayBalance(acc);
-
-  // Display summary
   calcDisplaySummary(acc);
 };
 
