@@ -1,7 +1,7 @@
-import { useState } from "react"
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { useState } from 'react';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
-function Login({onLoginSubmit}) {
+function Login({ onLoginSubmit }) {
   const [username, setUsername] = useState('');
   const [pin, setPin] = useState('');
 
@@ -11,7 +11,7 @@ function Login({onLoginSubmit}) {
 
     setUsername('');
     setPin('');
-  }
+  };
 
   return (
     <form className="flex items-center gap-2" onSubmit={handlerFormSubmit}>

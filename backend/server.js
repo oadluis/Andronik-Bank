@@ -52,16 +52,29 @@ app.get('/', (req, res) => {
   res.send('Backend Andronik App funcionando!');
 });
 
+app.post('/api/v1/transfer', (req, res) => {
+  const { userTarget, amount } = req.body;
+
+  const accountTarget = accounts.find(
+    (account) => account.username === userTarget,
+  );
+
+  console.log(`${userTarget}\n${amount}`);
+
+  res.status(200).json({ data: { accountTarget } });
+});
+
 app.post('/api/v1/login', (req, res) => {
   const { username, pin } = req.body;
 
   const currentAccount = accounts.find((acc) => acc.username === username);
 
-  if (currentAccount?.pin === Number(pin)) res.status(200).json(currentAccount);
-  else
+  if (!currentAccount?.pin === Number(pin))
     res
       .status(401)
-      .json({ message: 'Login falhou. Usuário ou PIN incorrertos.' });
+      .json({ message: 'Login falhor. Usuário ou PIN incorretos.' });
+
+  res.status(200).json(currentAccount);
 });
 
 app.listen(port, () => {

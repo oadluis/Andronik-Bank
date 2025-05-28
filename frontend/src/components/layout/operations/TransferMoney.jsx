@@ -1,15 +1,35 @@
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { useState } from 'react';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
-function TransferMoney() {
+function TransferMoney({ onTransferSubmit }) {
+  const [target, setTarget] = useState('');
+  const [amount, setAmount] = useState('');
+
+  const transferMoneySubmit = (e) => {
+    e.preventDefault();
+    console.log('Valor do target:' + target);
+    console.log('Valor do amount:' + amount);
+
+    onTransferSubmit(target, amount);
+
+    setTarget('');
+    setAmount('');
+  };
+
   return (
     <div className="flex flex-col justify-center items-start w-full bg-red-800 px-[3rem] py-[2.5rem] my-4 rounded-xl bg-gradient-to-br from-[#ffb003] to-[#ffcb03]">
       <span className="text-2xl font-bold mb-4">Transfer Money</span>
       <div className="flex flex-col justify-center items-start w-full h-full">
-        <form className="flex flex-row justify-start items-start w-full h-full gap-10">
+        <form
+          className="flex flex-row justify-start items-start w-full h-full gap-10"
+          onSubmit={transferMoneySubmit}
+        >
           <div className="flex flex-col justify-center items-center">
             <input
               type="text"
               className="bg-gray-500 opacity-25 rounded-lg p-1 mb-2"
+              value={target}
+              onChange={(e) => setTarget(e.target.value)}
             />
             <label>Transfer To</label>
           </div>
@@ -17,10 +37,15 @@ function TransferMoney() {
             <input
               type="text"
               className="bg-gray-500 opacity-25 rounded-lg p-1 mb-2"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
             />
             <label>Amount</label>
           </div>
-          <button className="bg-white rounded-lg py-1 px-4 mb-2">
+          <button
+            onTransferSubmit={onTransferSubmit}
+            className="bg-white rounded-lg py-1 px-4 mb-2"
+          >
             <ArrowRightIcon className="size-6" />
           </button>
         </form>
@@ -30,30 +55,3 @@ function TransferMoney() {
 }
 
 export default TransferMoney;
-
-/*
-<input type="text" />
-        <label>TransferTo</label>
-        <input type="text" />
-        <label>Amount</label>
-
-        
-.operation--transfer {
-    background-image: linear-gradient(to top left, #ffb003, #ffcb03);
-  }
-*/
-
-/*
-(Test code)
-<div className="flex flex-row justify-start items-start w-full h-full">
-          <input
-            type="text"
-            className="bg-gray-500 opacity-50 rounded-lg mr-[2rem] p-2"
-          />
-          <input type="text" className="bg-gray-300 rounded-lg p-2" />
-        </div>
-        <div>
-          <label>TransferTo</label>
-          <label>amount</label>
-        </div>
-*/

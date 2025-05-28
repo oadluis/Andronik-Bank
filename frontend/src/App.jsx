@@ -10,6 +10,7 @@ import Footer from './components/layout/Footer';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
+  const [targetData, setTargetData] = useState(null);
 
   const handleLogin = async (username, pin) => {
     try {
@@ -31,8 +32,26 @@ function App() {
 
       console.log('Login bem sucedido! Dados do usuário:', userData);
     } catch (err) {
-      console.error('Erro durante o login:', error.message);
-      alert('Login falhou:' + error.message);
+      console.error('Erro durante o login:', err.message);
+      alert('Login falhou:' + err.message);
+    }
+  };
+
+  const transferMoney = async (target, amount) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/v1/transfer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ target, amount }),
+      });
+
+      const data = await response.json();
+      setTargetData(data);
+      console.log('Requisição bem sucedida!', targetData);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -48,7 +67,7 @@ function App() {
               <CurrentLogs currentUser={currentUser} />
             </div>
             <div className="flex flex-col justify-around items-start w-2/4">
-              <TransferMoney />
+              <TransferMoney onTransferSubmit={transferMoney} />
               <RequestLoan />
               <CloseAccount />
             </div>

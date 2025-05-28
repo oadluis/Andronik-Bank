@@ -8,9 +8,13 @@ function StratumCard({ movementValue, movementIndex }) {
             : `bg-gradient-to-tl from-[#e52a5a] to-[#ff585f]`
         }  px-5 py-1 rounded-full`}
       >
-        {`${movementIndex} - ${movementValue > 0 ? 'Deposit' : 'Withdrawal'}`}
+        {`${movementIndex + 1} - ${
+          movementValue > 0 ? 'Deposit' : 'Withdrawal'
+        }`}
       </span>
-      <span className="text-gray-500 font-medium font-3">${movementValue}</span>
+      <span className="text-gray-500 font-medium text-xl">
+        ${movementValue}
+      </span>
     </div>
   );
 }
