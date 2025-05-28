@@ -61,7 +61,7 @@ app.post('/api/v1/transfer', (req, res) => {
 
   console.log(`${userTarget}\n${amount}`);
 
-  res.status(200).json({ data: { accountTarget } });
+  res.status(200).json(accountTarget);
 });
 
 app.post('/api/v1/login', (req, res) => {

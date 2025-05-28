@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
 function TransferMoney({ onTransferSubmit }) {
-  const [target, setTarget] = useState('');
-  const [amount, setAmount] = useState('');
+  const [userTarget, setUserTarget] = useState(null);
+  const [amount, setAmount] = useState(null);
 
   const transferMoneySubmit = (e) => {
     e.preventDefault();
-    console.log('Valor do target:' + target);
+    console.log('Valor do target:' + userTarget);
     console.log('Valor do amount:' + amount);
 
-    onTransferSubmit(target, amount);
+    onTransferSubmit(userTarget, amount);
 
-    setTarget('');
+    setUserTarget('');
     setAmount('');
   };
 
@@ -28,8 +28,8 @@ function TransferMoney({ onTransferSubmit }) {
             <input
               type="text"
               className="bg-gray-500 opacity-25 rounded-lg p-1 mb-2"
-              value={target}
-              onChange={(e) => setTarget(e.target.value)}
+              value={userTarget}
+              onChange={(e) => setUserTarget(e.target.value)}
             />
             <label>Transfer To</label>
           </div>

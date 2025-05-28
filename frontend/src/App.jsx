@@ -37,19 +37,27 @@ function App() {
     }
   };
 
-  const transferMoney = async (target, amount) => {
+  const transferMoney = async (userTarget, amount) => {
     try {
       const response = await fetch('http://localhost:3000/api/v1/transfer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ target, amount }),
+        body: JSON.stringify({ userTarget, amount }),
       });
+
+      if(!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.message || 'A requisição falhou!')
+      }
 
       const data = await response.json();
       setTargetData(data);
-      console.log('Requisição bem sucedida!', targetData);
+      console.log('target que chegou no app.jsx: ' + userTarget);
+      console.log('amount que chegou no app.jsx: ' + amount)
+      console.log('Requisição bem sucedida!', data);
+      console.log(data)
     } catch (error) {
       console.log(error);
     }
