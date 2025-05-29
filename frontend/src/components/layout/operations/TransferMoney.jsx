@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
-function TransferMoney({ onTransferSubmit }) {
+function TransferMoney({ onTransferSubmit, currentUser }) {
   const [userTarget, setUserTarget] = useState(null);
   const [amount, setAmount] = useState(null);
 
@@ -10,7 +10,7 @@ function TransferMoney({ onTransferSubmit }) {
     console.log('Valor do target:' + userTarget);
     console.log('Valor do amount:' + amount);
 
-    onTransferSubmit(userTarget, amount);
+    onTransferSubmit(currentUser, userTarget, amount);
 
     setUserTarget('');
     setAmount('');

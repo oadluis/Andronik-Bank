@@ -31,20 +31,22 @@ function App() {
       setCurrentUser(userData);
 
       console.log('Login bem sucedido! Dados do usuário:', userData);
+      const currentUserServer = currentUser;
+      return currentUserServer;
     } catch (err) {
       console.error('Erro durante o login:', err.message);
       alert('Login falhou:' + err.message);
     }
   };
 
-  const transferMoney = async (userTarget, amount) => {
+  const transferMoney = async (currentUser, userTarget, amount) => {
     try {
       const response = await fetch('http://localhost:3000/api/v1/transfer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userTarget, amount }),
+        body: JSON.stringify({ currentUser, userTarget, amount }),
       });
 
       if(!response.ok) {
@@ -54,12 +56,8 @@ function App() {
 
       const data = await response.json();
       setTargetData(data);
-      console.log('target que chegou no app.jsx: ' + userTarget);
-      console.log('amount que chegou no app.jsx: ' + amount)
-      console.log('Requisição bem sucedida!', data);
-      console.log(data)
     } catch (error) {
-      console.log(error);
+      console.error('Erro ao tranferir o valor!', error.message);
     }
   };
 
@@ -75,7 +73,7 @@ function App() {
               <CurrentLogs currentUser={currentUser} />
             </div>
             <div className="flex flex-col justify-around items-start w-2/4">
-              <TransferMoney onTransferSubmit={transferMoney} />
+              <TransferMoney onTransferSubmit={transferMoney} currentUser={currentUser} />
               <RequestLoan />
               <CloseAccount />
             </div>

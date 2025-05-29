@@ -53,16 +53,16 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/v1/transfer', (req, res) => {
-  const { userTarget, amount } = req.body;
+  const { currentUser, userTarget, amount } = req.body;
 
   const accountTarget = accounts.find(
     (account) => account.username === userTarget,
   );
 
-  console.log(accountTarget)
-  accountTarget.movements.push(Number(amount));
-  console.log(accountTarget)
-  res.status(200).json(accountTarget);
+  
+  currentUser.movements.push(-amount)
+  accountTarget?.movements.push(Number(amount));
+  res.status(200).json(accountTarget, currentUser);
 });
 
 app.post('/api/v1/login', (req, res) => {
