@@ -12,6 +12,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [targetData, setTargetData] = useState(null);
 
+
   const handleLogin = async (username, pin) => {
     try {
       const response = await fetch('http://localhost:3000/api/v1/login', {
@@ -54,12 +55,15 @@ function App() {
         throw new Error(errData.message || 'A requisição falhou!')
       }
 
-      const data = await response.json();
-      setTargetData(data);
+      const responseData = await response.json();
+      setTargetData(responseData);
+      setCurrentUser(responseData.currentUser)
+
     } catch (error) {
       console.error('Erro ao tranferir o valor!', error.message);
     }
   };
+
 
   return (
     <div className="h-[100dvh] bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col">

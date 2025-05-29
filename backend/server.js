@@ -62,7 +62,7 @@ app.post('/api/v1/transfer', (req, res) => {
   
   currentUser.movements.push(-amount)
   accountTarget?.movements.push(Number(amount));
-  res.status(200).json(accountTarget, currentUser);
+  res.status(200).json({accountTarget, currentUser});
 });
 
 app.post('/api/v1/login', (req, res) => {
