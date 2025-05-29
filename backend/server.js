@@ -59,8 +59,9 @@ app.post('/api/v1/transfer', (req, res) => {
     (account) => account.username === userTarget,
   );
 
-  console.log(`${userTarget}\n${amount}`);
-
+  console.log(accountTarget)
+  accountTarget.movements.push(Number(amount));
+  console.log(accountTarget)
   res.status(200).json(accountTarget);
 });
 
