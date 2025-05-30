@@ -68,7 +68,7 @@ function App() {
 
       {currentUser ? (
         <main className="mx-auto my-5 max-w-5xl w-full">
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <CurrentBalance currentUser={currentUser} />
             <CurrentBalance currentUser={currentUser} />
           </div>
