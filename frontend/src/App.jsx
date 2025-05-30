@@ -12,7 +12,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [targetData, setTargetData] = useState(null);
 
-
   const handleLogin = async (username, pin) => {
     try {
       const response = await fetch('http://localhost:3000/api/v1/login', {
@@ -50,41 +49,45 @@ function App() {
         body: JSON.stringify({ currentUser, userTarget, amount }),
       });
 
-      if(!response.ok) {
+      if (!response.ok) {
         const errData = await response.json();
-        throw new Error(errData.message || 'A requisição falhou!')
+        throw new Error(errData.message || 'A requisição falhou!');
       }
 
       const responseData = await response.json();
       setTargetData(responseData);
-      setCurrentUser(responseData.currentUser)
-
+      setCurrentUser(responseData.currentUser);
     } catch (error) {
       console.error('Erro ao tranferir o valor!', error.message);
     }
   };
-
 
   return (
     <div className="h-[100dvh] bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col">
       <Navbar onLoginSubmit={handleLogin} currentUser={currentUser} />
 
       {currentUser ? (
-        <div className="h-full flex flex-col justify-center items-center">
-          <CurrentBalance currentUser={currentUser} />
-          <div className="flex justify-center items-center w-3/4">
-            <div className="flex flex-col justify-center items-start w-2/4 px-5">
-              <CurrentLogs currentUser={currentUser} />
-            </div>
-            <div className="flex flex-col justify-around items-start w-2/4">
-              <TransferMoney onTransferSubmit={transferMoney} currentUser={currentUser} />
-              <RequestLoan />
-              <CloseAccount />
-            </div>
+        <main className="mx-auto my-5 max-w-5xl w-full">
+          <div className="grid grid-cols-2 gap-5">
+            <CurrentBalance currentUser={currentUser} />
+            <CurrentBalance currentUser={currentUser} />
           </div>
+
+          <div className="">
+            <CurrentLogs currentUser={currentUser} />
+          </div>
+          <div className="flex flex-col justify-around items-start w-2/4">
+            <TransferMoney
+              onTransferSubmit={transferMoney}
+              currentUser={currentUser}
+            />
+            <RequestLoan />
+            <CloseAccount />
+          </div>
+
           <div></div>
           <Footer />
-        </div>
+        </main>
       ) : null}
     </div>
   );

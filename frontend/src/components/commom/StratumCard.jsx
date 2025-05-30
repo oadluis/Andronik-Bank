@@ -1,6 +1,20 @@
-function StratumCard({ movementValue, movementIndex }) {
+function StratumCard({ movementValue }) {
   return (
-    <div className="flex justify-between items-center w-full h-auto px-[2rem] py-[1.7rem] border-b border-gray-100">
+    <tr>
+      <td className="px-6 py-4 whitespace-nowrap">25/03/2024</td>
+      <td className="px-6 py-4">deposito</td>
+      <td className="px-6 py-4">receita</td>
+      <td className="px-6 py-4 text-sm text-green-600 font-semibold">
+        +R$5.000,00
+      </td>
+    </tr>
+  );
+}
+
+export default StratumCard;
+
+/*
+<div className="flex justify-between items-center w-full h-auto px-[2rem] py-[1.7rem] border-b border-gray-100">
       <span
         className={`font-medium text-white ${
           movementValue > 0
@@ -16,7 +30,4 @@ function StratumCard({ movementValue, movementIndex }) {
         ${movementValue}
       </span>
     </div>
-  );
-}
-
-export default StratumCard;
+*/
