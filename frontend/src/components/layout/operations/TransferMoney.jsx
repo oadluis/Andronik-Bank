@@ -27,7 +27,7 @@ function TransferMoney({ onTransferSubmit, currentUser }) {
           <div className="flex flex-col justify-center items-center">
             <input
               type="text"
-              className="bg-gray-500 opacity-25 rounded-lg p-1 mb-2"
+              className="bg-[#d99a00] rounded-lg p-1 mb-2 text-black"
               value={userTarget}
               onChange={(e) => setUserTarget(e.target.value)}
             />
@@ -36,7 +36,7 @@ function TransferMoney({ onTransferSubmit, currentUser }) {
           <div className="flex flex-col justify-center items-center">
             <input
               type="text"
-              className="bg-gray-500 opacity-25 rounded-lg p-1 mb-2"
+              className="bg-[#d99a00] opacity-25 rounded-lg p-1 mb-2"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
             />
