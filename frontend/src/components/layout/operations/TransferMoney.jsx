@@ -33,6 +33,7 @@ function TransferMoney({ onTransferSubmit, currentUser }) {
             />
             <label>Transfer To</label>
           </div>
+          <br />
           <div className="flex flex-col justify-center items-center">
             <input
               type="text"

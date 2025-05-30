@@ -9,6 +9,8 @@ lerna-debug.log*
 
 node_modules
 package-lock.json
+goal
+bankist-app (legacy)
 dist
 dist-ssr
 *.local
