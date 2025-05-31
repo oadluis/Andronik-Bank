@@ -4,7 +4,7 @@ function CurrentBalance({ currentUser }) {
   const currentDate = new Date();
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden">
+    <section className="bg-white rounded-xl shadow-md overflow-hidden">
       <div className="p-6">
         <div className="flex justify-between items-start">
           <div>
@@ -20,7 +20,7 @@ function CurrentBalance({ currentUser }) {
             <p className="text-gray-500 font-medium">{`As of ${currentDate.getDate()}/${currentDate.getMonth()}/${currentDate.getFullYear()}`}</p>
           </div>
           <div className="bg-blue-50 rounded-lg w-12 h-12 flex items-center justify-center">
-            <WalletIcon className=" size-8 text-purple-900" />
+            <WalletIcon className=" size-6 text-purple-900" />
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@ function CurrentBalance({ currentUser }) {
           <p className="font-medium text-indigo-600">R$3.220</p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import Navbar from './components/layout/Navbar';
 import CurrentBalance from './components/layout/CurrentBalance';
+import Protection from './components/layout/Protection';
 import CurrentLogs from './components/layout/Stratum';
 import TransferMoney from './components/layout/operations/TransferMoney';
 import RequestLoan from './components/layout/operations/RequestLoan';
@@ -68,9 +69,9 @@ function App() {
 
       {currentUser ? (
         <main className="mx-auto my-5 max-w-5xl w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-5">
             <CurrentBalance currentUser={currentUser} />
-            <CurrentBalance currentUser={currentUser} />
+            <Protection />
           </div>
 
           <div className="">
