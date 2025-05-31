@@ -1,3 +1,5 @@
+import { WalletIcon } from '@heroicons/react/24/solid';
+
 function CurrentBalance({ currentUser }) {
   const currentDate = new Date();
 
@@ -16,6 +18,9 @@ function CurrentBalance({ currentUser }) {
               0,
             )}`}</span>
             <p className="text-gray-500 font-medium">{`As of ${currentDate.getDate()}/${currentDate.getMonth()}/${currentDate.getFullYear()}`}</p>
+          </div>
+          <div className="bg-blue-50 rounded-lg w-12 h-12 flex items-center justify-center">
+            <WalletIcon className=" size-8 text-purple-900" />
           </div>
         </div>
       </div>
