@@ -64,31 +64,35 @@ function App() {
   };
 
   return (
-    <div className="h-[100dvh] bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col">
+    <div className="h-auto bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col">
       <Navbar onLoginSubmit={handleLogin} currentUser={currentUser} />
 
       {currentUser ? (
-        <main className="mx-auto my-5 max-w-5xl w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-5">
-            <CurrentBalance currentUser={currentUser} />
-            <Protection />
-          </div>
+        <>
+          <main className="mx-auto my-5 max-w-5xl w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-5">
+              <CurrentBalance currentUser={currentUser} />
+              <Protection />
+            </div>
 
-          <div className="">
-            <CurrentLogs currentUser={currentUser} />
-          </div>
-          <div className="flex flex-col justify-around items-start w-2/4">
-            <TransferMoney
-              onTransferSubmit={transferMoney}
-              currentUser={currentUser}
-            />
-            <RequestLoan />
-            <CloseAccount />
-          </div>
+            <div className="">
+              <CurrentLogs currentUser={currentUser} />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-5">
+              <TransferMoney
+                onTransferSubmit={transferMoney}
+                currentUser={currentUser}
+              />
+              <RequestLoan />
+              <CloseAccount />
+            </div>
 
-          <div></div>
-          <Footer />
-        </main>
+            <div></div>
+          </main>
+          <footer>
+            <Footer />
+          </footer>
+        </>
       ) : null}
     </div>
   );
