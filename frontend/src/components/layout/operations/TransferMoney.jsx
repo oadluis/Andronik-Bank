@@ -75,23 +75,3 @@ function TransferMoney({ onTransferSubmit, currentUser }) {
 }
 
 export default TransferMoney;
-
-/*
-<span className="text-2xl font-bold mb-4">Transfer Money</span>
-      <div className="flex flex-col justify-center items-start w-full h-full">
-        <form
-          className="flex flex-row justify-start items-start w-full h-full gap-10"
-         
-        >
-          <div className="flex flex-col justify-center items-center">
-            
-          </div>
-          <br />
-          <div className="flex flex-col justify-center items-center">
-            
-            
-          </div>
-          
-        </form>
-      </div>
-*/
