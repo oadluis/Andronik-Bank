@@ -6,7 +6,7 @@ import Protection from './components/layout/Protection';
 import CurrentLogs from './components/layout/Stratum';
 import TransferMoney from './components/layout/operations/TransferMoney';
 import RequestLoan from './components/layout/operations/RequestLoan';
-import CloseAccount from './components/layout/operations/CloseAccount';
+import ConfirmPayment from './components/layout/operations/ConfirmPayment';
 import Footer from './components/layout/Footer';
 
 function App() {
@@ -84,7 +84,7 @@ function App() {
                 currentUser={currentUser}
               />
               <RequestLoan />
-              <CloseAccount />
+              <ConfirmPayment />
             </div>
 
             <div></div>

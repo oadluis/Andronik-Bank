@@ -1,6 +1,6 @@
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
-function CloseAccount() {
+function ConfirmPayment() {
   return (
     <div className="flex flex-col justify-center items-start w-full bg-red-800 px-[3rem] py-[2.5rem] my-4 rounded-xl bg-gradient-to-br from-[#e52a5a] to-[#ff585f]">
       <span className="text-2xl font-bold mb-4">Transfer Money</span>
@@ -29,4 +29,4 @@ function CloseAccount() {
   );
 }
 
-export default CloseAccount;
+export default ConfirmPayment;
