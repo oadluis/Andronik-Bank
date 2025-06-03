@@ -6,7 +6,7 @@ import Protection from './components/layout/Protection';
 import CurrentLogs from './components/layout/Stratum';
 import TransferMoney from './components/layout/operations/TransferMoney';
 import RequestLoan from './components/layout/operations/RequestLoan';
-import ConfirmPayment from './components/layout/operations/ConfirmPayment';
+import SecurityBanner from './components/layout/SecurityBanner';
 import Footer from './components/layout/Footer';
 
 function App() {
@@ -78,16 +78,17 @@ function App() {
             <div className="">
               <CurrentLogs currentUser={currentUser} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
               <TransferMoney
                 onTransferSubmit={transferMoney}
                 currentUser={currentUser}
               />
               <RequestLoan />
-              <ConfirmPayment />
             </div>
 
-            <div></div>
+            <div>
+              <SecurityBanner />
+            </div>
           </main>
           <footer>
             <Footer />
