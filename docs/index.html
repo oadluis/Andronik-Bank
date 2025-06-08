@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard Bancário - Andronik Bank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bank-blue': '#1d4ed8',
+                        'bank-gradient': 'linear-gradient(135deg, #1d4ed8 0%, #0e2a8d 100%)',
+                        'success-light': '#f0fdf4',
+                        'warning-light': '#fffbeb',
+                        'danger-light': '#fef2f2',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #334155;
+        }
+        
+        .card-gradient {
+            background: linear-gradient(135deg, #1d4ed8 0%, #0e2a8d 100%);
+        }
+        
+        .transaction-row {
+            transition: all 0.2s ease;
+        }
+        
+        .transaction-row:hover {
+            background-color: #f1f5f9;
+            transform: translateY(-1px);
+        }
+        
+        .security-badge {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        
+        .countdown-timer {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .secondary-page {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .secondary-page.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Main App Container -->
+    <div id="app" class="flex-1">
+        <!-- Header -->
+        <header class="sticky top-0 z-10 flex flex-col md:flex-row justify-between items-center p-4 bg-white shadow-md">
+            <div class="flex items-center mb-4 md:mb-0">
+                <div class="w-10 h-10 bg-blue-700 rounded-full flex items-center justify-center mr-3">
+                    <i class="fas fa-university text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold">Andronik Bank</h1>
+                    <p class="text-sm text-gray-500">Bem-vindo, <span class="font-semibold text-indigo-700">Jessica</span></p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button onclick="togglePage('main-content')" class="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+                <div class="flex items-center space-x-2">
+                    <div class="relative">
+                        <i class="fas fa-bell text-gray-500 text-lg"></i>
+                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                        <i class="fas fa-user text-indigo-700"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <main id="main-content" class="p-4 md:p-6 max-w-6xl mx-auto space-y-8">
+            <!-- Account Summary -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Balance Card -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Saldo Atual</h2>
+                                <p class="text-3xl font-bold text-gray-800 mt-1">R$12.720,00</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full flex items-center">
+                                        <i class="fas fa-arrow-up mr-1 text-xs"></i> 2.3% 
+                                    </span>
+                                    <span class="ml-2 text-gray-500 text-sm">30/04/2025</span>
+                                </div>
+                            </div>
+                            <div class="bg-blue-50 rounded-lg w-12 h-12 flex items-center justify-center">
+                                <i class="fas fa-wallet text-blue-700 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-6 py-4 grid grid-cols-3 gap-4 border-t">
+                        <div class="text-center">
+                            <p class="text-xs text-gray-500">Receitas</p>
+                            <p class="font-medium text-green-600">R$17.500</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-xs text-gray-500">Despesas</p>
+                            <p class="font-medium text-red-600">R$4.780</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-xs text-gray-500">Poupança</p>
+                            <p class="font-medium text-indigo-600">R$3.220</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Card -->
+                <div class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h2 class="text-blue-100 text-sm font-medium uppercase tracking-wide">Segurança da Conta</h2>
+                                <p class="text-2xl font-bold mt-1">Proteção Ativa</p>
+                                <div class="flex items-center mt-3">
+                                    <div class="security-badge bg-blue-500 text-white px-3 py-1 rounded-full flex items-center">
+                                        <i class="fas fa-shield-alt mr-2"></i>
+                                        <span class="text-xs">Verificado</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                                    <i class="fas fa-lock text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white/10 px-6 py-3 text-sm">
+                        <p>Próxima verificação de segurança: 15/05/2025</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions -->
+            <section class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="border-b px-6 py-4 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold">Histórico de Transações</h2>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg">Mês atual</button>
+                        <button class="px-3 py-1 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">Exportar</button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descrição</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="transaction-row">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">28/04/2025</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-arrow-down text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Depósito</div>
+                                            <div class="text-sm text-gray-500">Salário Mensal</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Receita</span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-green-600 font-semibold">+R$5.000,00</td>
+                                <td class="px极极极6 py-4">
+                                    <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">Concluído</span>
+                                </td>
+                            </tr>
+
+                            <tr class="transaction-row">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">22/04/2025</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-arrow-down text-blue-600"></i>
+                                        </极极极div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Depósito</div>
+                                            <div class="text-sm text-gray-500">Freelance</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Receita</span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-green-600 font-semibold">+R$3.400,00</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">Concluído</span>
+                                </td>
+                            </tr>
+
+                            <tr class="transaction-row">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">20/04/2025</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-home text-orange-600"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-999">Aluguel</div>
+                                            <div class="text-sm text-gray-500">Apartamento</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs bg-rose-100 text-rose-800 rounded-full">Moradia</span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-red-600 font-semibold">-R$1.500,00</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">Concluído</span>
+                                </td>
+                            </tr>
+
+                            <tr class="transaction-row">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">18/04/2025</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-shopping-cart text-purple-600"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Supermercado</div>
+                                            <div class="text-sm text-gray-500">Mercado Central</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full">Compras</span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-red-600 font-semibold">-R$790,00</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">Concluído</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="px-6 py-4 bg-gray-50 flex justify-between items-center">
+                    <p class="text-gray-500 text-sm">Mostrando 4 de 7 transações</p>
+                    <button class="text-blue-600 text-sm font-medium hover:text-blue-800">Ver todas</button>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Transfer -->
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-lg">Transferir Dinheiro</h3>
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-exchange-alt text-blue-600"></i>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Transferir para</label>
+                            <div class="relative">
+                                <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
+                                <input type="text" placeholder="Nome ou conta" class="pl-10 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 focus:border-blue-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text极极极-sm font-medium text-gray-700 mb-1">Valor</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-3 text-gray-700">R$</span>
+                                <input type="text" inputmode="numeric" placeholder="0,00" class="pl-8 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 focus:border-blue-500">
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium transition">
+                                Transferir agora <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loan -->
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-lg">Solicitar Empréstimo</h3>
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-hand-holding-usd text-green-600"></i>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Valor do empréstimo</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-3 text-gray-700">R$</span>
+                                <input type="text" inputmode="numeric" placeholder="0,00" class="pl-8 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 focus:border-blue-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Parcelas</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 focus:border-blue-500">
+                                <option>12 meses</option>
+                                <option>24 meses</option>
+                                <option>36 meses</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-6">
+                            <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 rounded-lg font-medium transition">
+                                Solicitar empréstimo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confirm Payment -->
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <div class="flex justify between items-center mb-4">
+                        <h3 class="font-semibold text-lg">Confirmar Pagamento</h3>
+                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-red-600"></i>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Código de confirmação</label>
+                            <input type="text" placeholder="XXXXXX" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 focus:border-blue-500 text-center font-mono">
+                        </div>
+
+                        <div class="py-2 bg-gray-50 rounded-lg px-3">
+                            <p class="text-sm text-center text-gray-600">
+                                Enviamos um código de 6 dígitos para o seu celular
+                            </p>
+                        </div>
+
+                        <div class="mt-6">
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium transition">
+                                Confirmar pagamento
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Security Banner -->
+            <div class="bg-gradient-to-r from-blue-800 to-indigo-900 rounded-xl shadow-lg text-white p-6">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mr-4">
+                            <i class="fas fa-user-shield text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Sua conta está segura</h3>
+                            <p class="text-blue-200 text-sm mt-1">Proteção avançada contra fraudes ativada</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 md:mt-0 flex items-center space-x-2">
+                        <div class="bg-white/10 px-4 py-2 rounded-lg text-center">
+                            <p class="text-xs">Tempo restante</p>
+                            <p class="countdown-timer font-bold text-lg">05:00</p>
+                        </div>
+                        <button class="bg-white text-blue-800 px-4 py-2 rounded-lg font-medium">
+                            Continuar navegando
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Security Page -->
+        <main id="security-page" class="secondary-page hidden max-w-6xl mx-auto p-4 md:p-8">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl md:text-3xl font-bold text-blue-700">
+                        <i class="fas fa-shield-alt mr-2"></i> Segurança da Conta
+                    </h1>
+                    <button onclick="togglePage('main-content')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center gap-2">
+                        <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+                    </button>
+                </div>
+
+                <div class="prose prose-blue max-w-6xl mx-auto">
+                    <div class="border-b pb-4 mb-6">
+                        <p class="text-gray-500">Atualizado em: 28 de Abril de 2025</p>
+                        <div class="mt-4 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                            <p><i class="fas fa-info-circle text-blue-500 mr-2"></i> Protegemos suas transações com os mais avançados sistemas de segurança do setor bancário.</p>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-xl font-semibold mt-8">Proteção Avançada</h2>
+                    <p class="mt-2">No Andronik Bank, sua segurança é nossa prioridade máxima. Utilizamos tecnologias de ponta e práticas de segurança rigorosas para proteger suas informações e transações contra ameaças digitais.</p>
+                    
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="feature-card bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-fingerprint text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg text-gray-800">Autenticação Multi-Fator</h3>
+                            <p class="mt-2 text-gray-600">Verificação em duas etapas para todas as operações sensíveis, garantindo que somente você tenha acesso à sua conta.</p>
+                        </div>
+                        
+                        <div class="feature-card bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-lock text-green-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg text-gray-800">Criptografia de Ponta</h3>
+                            <p class="mt-2 text-gray-600">Todos os dados são protegidos com criptografia AES 256-bit, o mesmo padrão usado por instituições militares.</p>
+                        </div>
+                        
+                        <div class="feature-card bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-bell text-purple-600 text-xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg text-gray-800">Monitoramento 24/7</h3>
+                            <p class="mt-2 text-gray-600">Sistema inteligente de detecção de fraudes que monitora sua conta continuamente e alerta sobre atividades suspeitas.</p>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-xl font-semibold mt-8">Dicas de Segurança</h2>
+                    <div class="mt-4 bg-gray-50 rounded-xl p-6">
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <div>
+                                    <p class="font-medium">Senhas Fortes</p>
+                                    <p class="text-sm text-gray-600">Use combinações complexas de letras, números e símbolos. Troque periodicamente.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <div>
+                                    <p class="font-medium">Dispositivos Seguros</p>
+                                    <p class="text-sm text-gray-600">Sempre faça login em dispositivos pessoais e protegidos por senha.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <div>
+                                    <p class="font-medium">Alertas Imediatos</p>
+                                    <p class="text-sm text-gray-600">Ative as notificações por SMS e e-mail para todas as transações.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <h2 class="text-xl font-semibold mt-8">Recursos de Segurança</h2>
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-blue-50 p-5 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-mobile-alt text-blue-700"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Bloqueio Remoto</p>
+                                    <p class="text-sm text-gray-600">Bloqueie temporariamente o acesso ao aplicativo em caso de perda de dispositivo.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 p-5 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-green-200 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-credit-card text-green-700"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Cartões Virtuais</p>
+                                    <p class="text-sm text-gray-600">Gere cartões virtuais descartáveis para compras online seguras.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-exclamation-triangle text-yellow-500 h-5 w-5"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-yellow-700">
+                                    <span class="font-medium">Alerta importante!</span> O Andronik Bank nunca pede senhas, códigos ou dados pessoais por e-mail, telefone ou SMS. Desconfie de mensagens solicitando estas informações.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Help Page -->
+        <main id="help-page" class="secondary-page hidden max-w-6xl mx-auto p-4 md:p-8">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl md:text-3xl font-bold text-indigo-700">
+                        <i class="fas fa-question-circle mr-2"></i> Central de Ajuda
+                    </h1>
+                    <button onclick="togglePage('main-content')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center gap-2">
+                        <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+                    </button>
+                </div>
+
+                <div class="prose prose-indigo max-w-6xl mx-auto">
+                    <div class="border-b pb-4 mb-6">
+                        <p class="text-gray-500">Encontre respostas para suas dúvidas mais comuns</p>
+                        <div class="mt-4 bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-500">
+                            <p><i class="fas fa-info-circle text-indigo-500 mr-2"></i> Estamos aqui para ajudar 24 horas por dia, 7 dias por semana.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-2/3">
+                            <h2 class="text-xl font-semibold">Perguntas Frequentes</h2>
+                            
+                            <div class="mt-6 space-y-4">
+                                <div class="border-b pb-4">
+                                    <button class="flex items-center justify-between w-full text-left font-medium text-gray-800">
+                                        <span>Como faço para abrir uma nova conta?</span>
+                                        <i class="fas fa-chevron-down ml-2 text-blue-600"></i>
+                                    </button>
+                                    <div class="mt-2 text-gray-600 hidden">
+                                        <p>Para abrir uma nova conta no Andronik Bank, acesse o menu "Produtos" em nosso aplicativo, selecione "Abrir Conta" e siga as instruções. Você precisará de:</p>
+                                        <ul class="mt-2 pl-6 list-disc">
+                                            <li>Documento de identidade (RG ou CNH)</li>
+                                            <li>Comprovante de residência recente</li>
+                                            <li>Seu CPF</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="border-b pb-4">
+                                    <button class="flex items-center justify-between w-full text-left font-medium text-gray-800">
+                                        <span>Perdi meu cartão, o que devo fazer?</span>
+                                        <i class="fas fa-chevron-down ml-2 text-blue-600"></i>
+                                    </button>
+                                    <div class="mt-2 text-gray-600 hidden">
+                                        <p>Se você perdeu seu cartão, é importante bloquear imediatamente para evitar uso indevido:</p>
+                                        <ol class="mt-2 pl-6 list-decimal">
+                                            <li>Acesse a seção "Cartões" no aplicativo</li>
+                                            <li>Selecione o cartão perdido</li>
+                                            <li>Toque em "Bloquear Cartão"</li>
+                                            <li>Siga as instruções para emitir um novo</li>
+                                        </ol>
+                                        <p class="mt-2">Você também pode bloquear seu cartão pelo telefone 0800 777 0000.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="border-b pb-4">
+                                    <button class="flex items-center justify-between w-full text-left font-medium text-gray-800">
+                                        <span>Como aumento meu limite de transferência?</span>
+                                        <i class="fas fa-chevron-down ml-2 text-blue-600"></i>
+                                    </button>
+                                    <div class="mt-2 text-gray-600 hidden">
+                                        <p>Para aumentar seu limite de transferência:</p>
+                                        <ul class="mt-2 pl-6 list-disc">
+                                            <li>Acesse "Configurações" > "Limites"</li>
+                                            <li>Selecione "Transferências"</li>
+                                            <li>Siga as etapas para autenticação adicional</li>
+                                        </ul>
+                                        <p class="mt-2">Após verificação, seu limite pode ser ajustado imediatamente.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h2 class="text-xl font-semibold mt-8">Tutoriais</h2>
+                            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-gray-50 rounded-lg p-4 flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                                        <i class="fas fa-exchange-alt text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium">Fazer uma Transferência</p>
+                                        <p class="text-sm text-gray-500">Veja como transferir dinheiro em menos de 1 minuto</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-50 rounded-lg p-4 flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mr-4">
+                                        <i class="fas fa-qrcode text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium">Pagar com Pix</p>
+                                        <p class="text-sm text-gray-500">Aprenda a pagar com QR Code</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-1/3">
+                            <div class="bg-blue-50 rounded-xl p-6">
+                                <h3 class="font-semibold text-lg text-blue-800">Contato Imediato</h3>
+                                <div class="mt-6 space-y-4">
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-phone text-blue-700"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <p class="font-medium">Telefone</p>
+                                            <p class="text-sm text-gray-600">0800 777 1234</p>
+                                            <p class="text-xs text-gray-500 mt-1">24 horas, 7 dias por semana</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-comment-alt text-green-700"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <p class="font-medium">Chat Online</p>
+                                            <p class="text-sm text-gray-600">Disponível no aplicativo</p>
+                                            <p class="text-xs text-gray-500 mt-1">Das 7h às 22h</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <div class="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-envelope text-purple-700"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <p class="font-medium">E-mail</p>
+                                            <p class="text-sm text-gray-600">suporte@andronikbank.com</p>
+                                            <p class="text-xs text-gray-500 mt-1">Resposta em até 24h</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-6">
+                                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium">
+                                        <i class="fas fa-headset mr-2"></i> Falar com Atendente
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Privacy Page -->
+        <main id="privacy-page" class="secondary-page hidden max-w-6xl mx-auto p-4 md:p-8">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl md:text-3xl font-bold text-purple-700">
+                        <i class="fas fa-user-shield mr-2"></i> Política de Privacidade
+                    </h1>
+                    <button onclick="togglePage('main-content')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center gap-2">
+                        <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+                    </button>
+                </div>
+
+                <div class="prose prose-purple max-w-6xl mx-auto">
+                    <div class="border-b pb-4 mb-6">
+                        <p class="text-gray-500">Última atualização: 28 de Abril de 2025</p>
+                        <div class="mt-4 bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                            <p><i class="fas fa-info-circle text-purple-500 mr-2"></i> Esta política descreve como coletamos, usamos e protegemos suas informações pessoais.</p>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-xl font-semibold">Informações que Coletamos</h2>
+                    <p class="mt-2">Para prestar nossos serviços, coletamos os seguintes tipos de informações:</p>
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="font-medium">Identificação</p>
+                            <ul class="mt-2 pl-4 space-y-1 list-disc text-sm text-gray-600">
+                                <li>Nome completo</li>
+                                <li>CPF</li>
+                                <li>RG</li>
+                                <li>Data de nascimento</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="font-medium">Contato</p>
+                            <ul class="mt-2 pl-4 space-y-1 list-disc text-sm text-gray-600">
+                                <li>Endereço de e-mail</li>
+                                <li>Número de telefone</li>
+                                <li>Endereço residencial</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="font-medium">Financeiras</p>
+                            <ul class="mt-2 pl-4 space-y-1 list-disc text-sm text-gray-600">
+                                <li>Dados de renda</li>
+                                <li>Histórico de transações</li>
+                                <li>Informações de contas bancárias</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-xl font-semibold mt-8">Como Utilizamos suas Informações</h2>
+                    <div class="mt-4 bg-white border border-gray-200 rounded-xl shadow-sm p-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="flex">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-check-circle text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Prestação de Serviços</p>
+                                    <p class="text-sm text-gray-600 mt-1">Contas bancárias, empréstimos, investimentos e outros serviços financeiros.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-shield-alt text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Segurança</p>
+                                    <p class="text-sm text-gray-600 mt-1">Detecção e prevenção de fraudes, atividades suspeitas e outros crimes.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-bell text-yellow-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Comunicações</p>
+                                    <p class="text-sm text-gray-600 mt-1">Alertas sobre sua conta, promoções relevantes e atualizações de serviços.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-chart-line text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Melhorias</p>
+                                    <p class="text-sm text-gray-600 mt-1">Pesquisas de satisfação e aprimoramento de nossos produtos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-xl font-semibold mt-8">Compartilhamento de Dados</h2>
+                    <p class="mt-2">Podemos compartilhar suas informações nas seguintes situações:</p>
+                    <div class="mt-4 bg-gray-50 p-5 rounded-lg">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-blue-200 flex items-center justify-center mt-1 mr-3 flex-shrink-0">
+                                    <i class="fas fa-building text-blue-700 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Parceiros Financeiros</p>
+                                    <p class="text-sm text-gray-600">Para processar transações e oferecer serviços complementares.</p>
+                                </div>
+                            </li>
+                            
+                            <li class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center mt-1 mr-3 flex-shrink-0">
+                                    <i class="fas fa-gavel text-green-700 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Requisitos Legais</p>
+                                    <p class="text-sm text-gray-600">Quando exigido por autoridades judiciais ou órgãos regulatórios.</p>
+                                </div>
+                            </li>
+                            
+                            <li class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-purple-200 flex items-center justify-center mt-1 mr-3 flex-shrink-0">
+                                    <i class="fas fa-sync-alt text-purple-700 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Fusões e Aquisições</p>
+                                    <p class="text-sm text-gray-600">Em casos de transferência de controle da instituição.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <h2 class="text-xl font-semibold mt-8">Seus Direitos</h2>
+                    <p class="mt-2">Conforme a LGPD, você tem o direito de:</p>
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                                    <i class="fas fa-eye text-blue-600"></i>
+                                </div>
+                                <p class="font-medium">Acessar seus dados</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-4">
+                                    <i class="fas fa-edit text-green-600"></i>
+                                </div>
+                                <p class="font-medium">Corrigir informações</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mr-4">
+                                    <i class="fas fa-ban text-yellow-600"></i>
+                                </div>
+                                <p class="font-medium">Opor-se ao tratamento</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mr-4">
+                                    <i class="fas fa-trash-alt text-red-600"></i>
+                                </div>
+                                <p class="font-medium">Excluir dados pessoais</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 bg-blue-50 rounded-lg p-6">
+                        <h3 class="font-semibold text-blue-800">Dúvidas sobre Privacidade?</h3>
+                        <p class="mt-2 text-blue-700">Entre em contato com nosso Encarregado de Dados:</p>
+                        <div class="mt-4 flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-blue-200 flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-blue-700"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">encarregado@andronikbank.com</p>
+                                <p class="text-sm text-blue-700">+55 (11) 3000-5000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Support Page -->
+        <main id="support-page" class="secondary-page hidden max-w-6xl mx-auto p-4 md:p-8">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl md:text-3xl font-bold text-teal-700">
+                        <i class="fas fa-headset mr-2"></i> Atendimento e Suporte
+                    </h1>
+                    <button onclick="togglePage('main-content')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center gap-2">
+                        <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+                    </button>
+                </div>
+
+                <div class="prose prose-teal max-w-6xl mx-auto">
+                    <div class="border-b pb-4 mb-6">
+                        <p class="text-gray-500">Estamos disponíveis 24 horas por dia para ajudá-lo</p>
+                        <div class="mt-4 bg-teal-50 p-4 rounded-lg border-l-4 border-teal-500">
+                            <p><i class="fas fa-info-circle text-teal-500 mr-2"></i> Conte conosco para resolver qualquer problema ou esclarecer dúvidas sobre nossos serviços.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-teal-700 to-teal-800 rounded-xl p-8 text-white">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 rounded-full bg-teal-600 flex items-center justify-center mb-4">
+                                    <i class="fas fa-phone-alt text-xl"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg">Telefone</h3>
+                                <p class="mt-2 text-teal-100 text-sm">0800 777 1234</p>
+                                <p class="text-xs mt-2">24 horas, 7 dias por semana</p>
+                            </div>
+                            
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 rounded-full bg-teal-600 flex items-center justify-center mb-4">
+                                    <i class="fas fa-comments text-xl"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg">Chat Online</h3>
+                                <p class="mt-2 text-teal-100 text-sm">Disponível no aplicativo</p>
+                                <p class="text-xs mt-2">Das 7h às 22h</p>
+                            </div>
+                            
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-16 h-16 rounded-full bg-teal-600 flex items-center justify-center mb-4">
+                                    <i class="fas fa-envelope text-xl"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg">E-mail</h3>
+                                <p class="mt-2 text-teal-100 text-sm">suporte@andronikbank.com</p>
+                                <p class="text-xs mt-2">Resposta em até 24h</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 text-center">
+                            <button class="bg-white text-teal-800 px-6 py-3 rounded-lg font-medium inline-flex items-center">
+                                <i class="fas fa-comment-dots mr-2"></i> Iniciar Chat
+                            </button>
+                            <p class="mt-2 text-sm">Horário atual de atendimento: 9h às 18h</p>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-xl font-semibold mt-8">Canais de Atendimento</h2>
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white border border-gray-200 rounded-lg p-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-teal-600"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg">Agências Físicas</h3>
+                            </div>
+                            <p class="mt-3 text-gray-600">Nosso atendimento presencial oferece soluções completas para todas as suas necessidades financeiras.</p>
+                            <div class="mt-4">
+                                <p class="font-medium">Horário de funcionamento:</p>
+                                <p class="text-sm text-gray-600">Segunda a Sexta: 10h às 16h</p>
+                                <p class="text-sm text-gray-600">Sábado: 10h às 13h</p>
+                            </div>
+                            <div class="mt-4">
+                                <button class="text-teal-600 hover:text-teal-800 flex items-center">
+                                    <i class="fas fa-search-location mr-2"></i> Localizar agência mais próxima
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-lg p-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                                    <i class="fas fa-desktop text-blue-600"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg">Internet Banking</h3>
+                            </div>
+                            <p class="mt-3 text-gray-600">Acesse nossas plataformas digitais para resolver suas questões de forma rápida e segura.</p>
+                            <div class="mt-6 grid grid-cols-2 gap-2">
+                                <div class="bg-gray-50 py-2 px-3 rounded flex items-center">
+                                    <i class="fab fa-android text-green-600 mr-2"></i>
+                                    <span class="text-sm">Android</span>
+                                </div>
+                                <div class="bg-gray-50 py-2 px-3 rounded flex items-center">
+                                    <i class="fab fa-apple text-gray-700 mr-2"></i>
+                                    <span class="text-sm">iOS</span>
+                                </div>
+                                <div class="bg-gray-50 py-2 px-3 rounded flex items-center">
+                                    <i class="fas fa-globe text-blue-600 mr-2"></i>
+                                    <span class="text-sm">Web</span>
+                                </div>
+                                <div class="bg-gray-50 py-2 px-3 rounded flex items-center">
+                                    <i class="fas fa-tablet-alt text-purple-600 mr-2"></i>
+                                    <span class="text-sm">iPad</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-xl font-semibold mt-8">Relacionamento com o Cliente</h2>
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-5 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mr-4">
+                                    <i class="fas fa-star text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Programa de Benefícios</p>
+                                    <p class="text-sm text-gray-600 mt-1">O Andronik Rewards oferece vantagens exclusivas para clientes especiais.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-5 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center mr-4">
+                                    <i class="fas fa-heart text-rose-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Adote seu Executivo</p>
+                                    <p class="text-sm text-gray-600 mt-1">Tenha um relacionamento personalizado com seu Gerente de Contas dedicado.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 border-t pt-6 text-center">
+                        <p class="text-gray-500">© 2025 Andronik Bank S.A. - CNPJ 00.000.000/0000-00</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white py-6">
+        <div class="max-w-6xl mx-auto px-4 text-center text-gray-500 text-sm">
+            <div class="flex flex-col md:flex-row justify-center space-y-3 md:space-y-0 md:space-x-6 mb-3">
+                <a href="#" onclick="togglePage('security-page')" class="hover:text-blue-600"><i class="fas fa-shield-alt mr-1"></i> Segurança</a>
+                <a href="#" onclick="togglePage('help-page')" class="hover:text-blue-600"><i class="fas fa-question-circle mr-1"></i> Ajuda</a>
+                <a href="#" onclick="togglePage('privacy-page')" class="hover:text-blue-600"><i class="fas fa-lock mr-1"></i> Privacidade</a>
+                <a href="#" onclick="togglePage('support-page')" class="hover:text-blue-600"><i class="fas fa-headset mr-1"></i> Suporte</a>
+            </div>
+            <p>© 2025 Andronik Bank S.A. CNPJ 00.000.000/0000-00</p>
+            <p class="mt-2 text-xs text-gray-400">Este é um ambiente seguro. Seus dados estão protegidos pela LGPD.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown timer
+        let minutes = 5;
+        let seconds = 0;
+
+        const timerElement = document.querySelector('.countdown-timer');
+
+        const timer = setInterval(() => {
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    clearInterval(timer);
+                    minutes = 5;
+                    seconds = 0;
+                } else {
+                    minutes--;
+                    seconds = 59;
+                }
+            } else {
+                seconds--;
+            }
+
+            timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }, 1000);
+
+        // FAQ accordions
+        document.querySelectorAll('#help-page .border-b button').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const isHidden = content.classList.contains('hidden');
+                
+                // Toggle arrow icon
+                const icon = button.querySelector('.fa-chevron-down');
+                icon.classList.toggle('fa-rotate-180', !isHidden);
+                
+                // Toggle content visibility
+                content.classList.toggle('hidden');
+            });
+        });
+
+        // Format currency inputs
+        document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
+            input.addEventListener('blur', function() {
+                let value = this.value.replace(/\D/g, '');
+                if (value) {
+                    value = parseFloat(value) / 100;
+                    this.value = 'R$ ' + value.toFixed(2).replace('.', ',')
+                        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+                }
+            });
+        });
+
+        // Page toggle functionality
+        function togglePage(pageId) {
+            // Hide all pages
+            document.getElementById('main-content').classList.add('hidden');
+            document.querySelectorAll('.secondary-page').forEach(page => {
+                page.classList.add('hidden');
+                page.classList.remove('active');
+            });
+            
+            // Show requested page
+            if (pageId === 'main-content') {
+                document.getElementById('main-content').classList.remove('hidden');
+            } else {
+                const page = document.getElementById(pageId);
+                page.classList.remove('hidden');
+                // Delay to trigger animation
+                setTimeout(() => {
+                    page.classList.add('active');
+                }, 10);
+            }
+        }
+
+        // Set up all back buttons
+        document.querySelectorAll('.back-button').forEach(button => {
+            button.addEventListener('click', () => {
+                togglePage('main-content');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -2,6 +2,8 @@
 
 Aplicação bancária fictícia para fins de estudo, composta por frontend (React + Tailwind + Vite) e backend (Node.js + Express.js)
 
+![UI Andronik Bank](docs/ui-andronik-bank.png)
+
 ## Estrutura do projeto
 
 ```
