@@ -63,6 +63,13 @@ function App() {
     }
   };
 
+  const requestLoan = async (currentUser, amount) => {
+    try {
+    } catch (error) {
+      console.error('Erro ao solicitar o empréstimo:', error.message);
+    }
+  };
+
   return (
     <div className="h-auto bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col">
       <Navbar onLoginSubmit={handleLogin} currentUser={currentUser} />

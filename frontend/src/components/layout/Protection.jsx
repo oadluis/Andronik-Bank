@@ -10,7 +10,7 @@ function Protection() {
             <h2 className="text-blue-100 text-sm font-medium uppercase tracking-wide">
               Segurança da Conta
             </h2>
-            <p className="text-2xl font-bold mt-1">PROTEÇÃO ATIVA</p>
+            <p className="text-2xl font-bold mt-1">Proteção ativa</p>
             <div className="flex items-center mt-3">
               <div className="security-badge bg-blue-500 text-white px-3 py-1 rounded-full flex items-center">
                 <ShieldCheckIcon className="text-white size-4 mr-2" />
