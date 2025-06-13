@@ -16,7 +16,7 @@ function App() {
   const handleLogin = async (username, pin) => {
     try {
       // Fazer a requisição de login para o servidor
-      const response = await fetch('http://localhost:3000/api/v1/', {
+      const response = await fetch('http://localhost:3000/api/v1/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ function App() {
   const transferMoney = async (currentUser, userTarget, amount) => {
     try {
       // Requisitar a transferência de dinheiro para o servidor
-      const response = await fetch('http://localhost:3000/api/v1/', {
+      const response = await fetch('http://localhost:3000/api/v1/transfer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

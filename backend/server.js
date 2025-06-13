@@ -50,10 +50,7 @@ const port = 3000;
 app.use(cors()); // Middleware cors
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Backend Andronik App funcionando!');
-});
-
+// Transferência bancária entre duas contas.
 const transferMoney = (req, res) => {
   const { currentUser, userTarget, amount } = req.body;
 
@@ -66,19 +63,21 @@ const transferMoney = (req, res) => {
   res.status(200).json({ accountTarget, currentUser });
 };
 
+// Login
 const login = (req, res) => {
   const { username, pin } = req.body;
   const currentAccount = accounts.find((acc) => acc.username === username);
 
-  if (!currentAccount?.pin === Number(pin))
-    res
+  if (!currentAccount || currentAccount.pin !== Number(pin))
+    return res
       .status(401)
       .json({ message: 'Login falhor. Usuário ou PIN incorretos.' });
 
   res.status(200).json(currentAccount);
 };
 
-app.route('/api/v1/').post(login).post(transferMoney);
+app.post('/api/v1/transfer', transferMoney);
+app.post('/api/v1/login', login);
 
 //server
 app.listen(port, () => {
