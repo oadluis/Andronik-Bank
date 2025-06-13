@@ -42,6 +42,8 @@ const account5 = {
 
 const accounts = [account1, account2, account3, account4, account5];
 
+//////////////////////////////////////////////////////////////////qqq
+
 const app = express();
 const port = 3000;
 
@@ -52,22 +54,20 @@ app.get('/', (req, res) => {
   res.send('Backend Andronik App funcionando!');
 });
 
-app.post('/api/v1/transfer', (req, res) => {
+const transferMoney = (req, res) => {
   const { currentUser, userTarget, amount } = req.body;
 
   const accountTarget = accounts.find(
     (account) => account.username === userTarget,
   );
 
-  
-  currentUser.movements.push(-amount)
+  currentUser.movements.push(-amount);
   accountTarget?.movements.push(Number(amount));
-  res.status(200).json({accountTarget, currentUser});
-});
+  res.status(200).json({ accountTarget, currentUser });
+};
 
-app.post('/api/v1/login', (req, res) => {
+const login = (req, res) => {
   const { username, pin } = req.body;
-
   const currentAccount = accounts.find((acc) => acc.username === username);
 
   if (!currentAccount?.pin === Number(pin))
@@ -76,8 +76,11 @@ app.post('/api/v1/login', (req, res) => {
       .json({ message: 'Login falhor. Usuário ou PIN incorretos.' });
 
   res.status(200).json(currentAccount);
-});
+};
 
+app.route('/api/v1/').post(login).post(transferMoney);
+
+//server
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });

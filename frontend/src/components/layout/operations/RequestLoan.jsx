@@ -2,6 +2,12 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { BanknotesIcon } from '@heroicons/react/24/solid';
 
 function RequestLoan() {
+  const requestLoanSubmit = (e) => {
+    // Prevent default form submission
+    // Verificar se as infomações estão corretas
+    // Passar as informações para a função de requisição de empréstimo
+  };
+
   return (
     <form className="bg-white p-5 rounded-xl shadow-md">
       <div className="flex justify-between items-center mb-4">

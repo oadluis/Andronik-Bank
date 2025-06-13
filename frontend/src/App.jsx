@@ -15,7 +15,8 @@ function App() {
 
   const handleLogin = async (username, pin) => {
     try {
-      const response = await fetch('http://localhost:3000/api/v1/login', {
+      // Fazer a requisição de login para o servidor
+      const response = await fetch('http://localhost:3000/api/v1/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,14 +24,17 @@ function App() {
         body: JSON.stringify({ username, pin }),
       });
 
+      // Tratando eventuais erros de resposta
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Login falhou');
       }
 
+      // Se o login for bem-sucedido, obter os dados do usuário
       const userData = await response.json();
       setCurrentUser(userData);
 
+      // Exibir mensagem de sucesso ou redirecionar o usuário
       console.log('Login bem sucedido! Dados do usuário:', userData);
       const currentUserServer = currentUser;
       return currentUserServer;
@@ -42,7 +46,8 @@ function App() {
 
   const transferMoney = async (currentUser, userTarget, amount) => {
     try {
-      const response = await fetch('http://localhost:3000/api/v1/transfer', {
+      // Requisitar a transferência de dinheiro para o servidor
+      const response = await fetch('http://localhost:3000/api/v1/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,11 +55,13 @@ function App() {
         body: JSON.stringify({ currentUser, userTarget, amount }),
       });
 
+      // Tratndo eventuais erros de resposta
       if (!response.ok) {
         const errData = await response.json();
         throw new Error(errData.message || 'A requisição falhou!');
       }
 
+      // Se a transferência for bem-sucedida, obter os dados atualizados
       const responseData = await response.json();
       setTargetData(responseData);
       setCurrentUser(responseData.currentUser);
@@ -65,6 +72,9 @@ function App() {
 
   const requestLoan = async (currentUser, amount) => {
     try {
+      // Requisitar o empréstimo para o servidor
+      // Tratando eventuais erros de resposta
+      // Se o empréstimo for bem-sucedido, obter os dados atualizados
     } catch (error) {
       console.error('Erro ao solicitar o empréstimo:', error.message);
     }
